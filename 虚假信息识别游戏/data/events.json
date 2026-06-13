@@ -1,0 +1,202 @@
+[
+  {
+    "id": 1,
+    "sender": "爸爸",
+    "avatar": "dad",
+    "type": "text",
+    "content": "专家提醒，多喝水可以冲刷肝肾毒素，每天必须喝够4L以上水,你们要多喝水啊！",
+    "truth": false,
+    "image": null,
+    "video": null,
+    "source": null,
+    "responseText": "我查了一下，喝太多水反而可能增加肾脏负担，并不是越多越好。",
+    "factCheck": {
+      "credibility": "10%",
+      "identifyReason": "发现以下可疑特征：\n✓ 使用\"必须\"\"一定\"等绝对化表述\n✓ 无任何医学机构或专业来源\n✓ 宣称\"排毒\"缺乏科学依据和验证\n✓ 信息来源为个人养生账号",
+      "result": "人体确实需要通过肾脏和肝脏代谢废物，但并不存在\"喝越多排毒越快\"的说法，正常成年人每日饮水量一般为1500-2000毫升即可满足生理需求。",
+      "risk": "盲目大量饮水可能增加肾脏负担，极端情况下可能引发水中毒，容易让公众混淆\"健康\"概念。",
+      "reference": "广东广播电视台、国家卫健委健康科普资料\nhttps://mp.weixin.qq.com/s/A87IZ4cj3QaGz2QlaHzaNw"
+    },
+    "scoreRule": null
+  },
+  {
+    "id": 2,
+    "sender": "妈妈",
+    "avatar": "mom",
+    "type": "image",
+    "content": "在三伏天晒背能“治百病”",
+    "truth": false,
+    "image": "data/public/image/events/晒背治百病.png",
+    "video": null,
+    "source": null,
+    "responseText": "晒太阳可以补充维生素D，但不能代替正规治疗。",
+    "factCheck": {
+      "credibility": "15%",
+      "identifyReason": "发现以下可疑特征：\n✓ 宣称一种方法可治疗多种疾病\n✓ 出现\"包治百病\"等夸张表述\n✓ 未提供相关医学研究证据\n✓ 利用传统养生概念增加可信度",
+      "result": "适度晒太阳有益，晒太阳能够促进维生素D合成，但没有任何医学证据证明晒背能够治疗关节炎、宫寒、胃肠等疾病。",
+      "risk": "延误正规治疗，增加中暑风险，增加紫外线致癌风险。",
+      "reference": "国家卫健委专家科普、中国互联网联合辟谣平台\nhttps://www.piyao.org.cn/20240829/7dfa2877ad8b4e548cf93f90c9834d19/c.html?f_link_type=f_linkinlinenote&flow_extra=eyJpbmxpbmVfZGlzcGxheV9wb3NpdGlvbiI6MCwiZG9jX3Bvc2l0aW9uIjowLCJkb2NfaWQiOiI5ODkyNjAzNzBlOTJiMmE2LTc5ZWYwYzExZGRjMGIyODAifQ%3D%3D"
+    },
+    "scoreRule": null
+  },
+  {
+    "id": 3,
+    "sender": "妈妈",
+    "avatar": "mom",
+    "type": "text",
+    "content": "医生让你打胰岛素，其实就是让你上瘾",
+    "truth": false,
+    "image": null,
+    "video": null,
+    "source": null,
+    "responseText": "胰岛素不会让人产生依赖。",
+    "factCheck": {
+      "credibility": "20%",
+      "identifyReason": "发现以下可疑特征：\n✓ 利用公众对药物的恐惧心理\n✓ 将长期治疗误解为药物依赖\n✓ 无引用循证医学证据\n✓ 内容与现有医学共识冲突",
+      "result": "该说法属于医疗谣言。胰岛素不会使人体产生药物依赖，更不存在\"成瘾\"问题。",
+      "risk": "可能导致患者拒绝治疗。",
+      "reference": "中国互联网联合辟谣平台\nhttps://www.piyao.org.cn/20250508/bc5861a926984b6aafe976baa20dafd1/c.html"
+    },
+    "scoreRule": null
+  },
+  {
+    "id": 4,
+    "sender": "爸爸",
+    "avatar": "dad",
+    "type": "image",
+    "content": "防蓝光眼镜可以预防近视，赶紧给孩子买",
+    "truth": false,
+    "image": "data/public/image/events/蓝光眼镜.jpg",
+    "video": null,
+    "source": null,
+    "responseText": "证据主要与年龄/遗传有关，不是防蓝光就能预防的。",
+    "factCheck": {
+      "credibility": "20%",
+      "identifyReason": "发现以下可疑特征：\n✓ 宣称某产品可预防近视\n✓ 常见于商业广告推广\n✓ 将\"减少蓝光\"直接等同于\"预防近视\"\n✓ 缺乏医学证据支持",
+      "result": "该说法缺乏科学依据。目前没有证据证明防蓝光眼镜能够预防近视或延缓近视发生发展。",
+      "risk": "容易产生消费误导。",
+      "reference": "广州卫健委、人民日报相关科普内容\nhttps://weibo.com/2803301701/R2FAVhutB?refer_flag=1001030103_"
+    },
+    "scoreRule": null
+  },
+  {
+    "id": 5,
+    "sender": "妈妈",
+    "avatar": "mom",
+    "type": "text",
+    "content": "千滚水和隔夜水会致癌，千万别喝",
+    "truth": false,
+    "image": null,
+    "video": null,
+    "source": null,
+    "responseText": "隔夜水不会自动变毒，关键是储存条件。",
+    "factCheck": {
+      "credibility": "15%",
+      "identifyReason": "发现以下可疑特征：\n✓ 利用\"致癌\"关键词制造恐慌\n✓ 刻意迎合传统饮食禁忌\n✓ 与现有科学共识矛盾",
+      "result": "该说法属于过度流传的伪健康谣言。经测验显示，千滚水和隔夜水中的硝酸盐含量远低于国家标准。",
+      "risk": "可能引起不必要焦虑。",
+      "reference": "人民日报、央视、健康中国相关科普内容\nhttps://weibo.com/2834480301/R3h9y1Tv7?refer_flag=1001030103_"
+    },
+    "scoreRule": null
+  },
+  {
+    "id": 6,
+    "sender": "舅舅",
+    "avatar": "uncle",
+    "type": "text",
+    "content": "冬天吃高热量的食物可以驱寒",
+    "truth": false,
+    "image": null,
+    "video": null,
+    "source": null,
+    "responseText": "这个说法不全面。",
+    "factCheck": {
+      "credibility": "30%",
+      "identifyReason": "发现以下可疑特征：\n✓ 将复杂生理过程简单归因\n✓ 使用绝对化表述\n✓ 没有提供权威研究来源\n✓ 与主流营养学观点冲突",
+      "result": "该说法不全面。高热量食物确实能够为人体提供热量，但人体御寒主要依赖产热能力，血液循环以及保暖措施。",
+      "risk": "容易导致过量饮食，形成错误健康认知。",
+      "reference": "央视网、健康中国\nhttps://mp.weixin.qq.com/s/ljmQ5Jvl7yGvI3lOC5SAfw"
+    },
+    "scoreRule": null
+  },
+  {
+    "id": 7,
+    "sender": "妈妈",
+    "avatar": "mom",
+    "type": "image",
+    "content": "城乡居民基础养老金月最低标准提高到205元新闻截图",
+    "truth": true,
+    "image": "data/public/image/events/image.png",
+    "video": null,
+    "source": null,
+    "responseText": "这是真实新闻",
+    "factCheck": {
+      "credibility": "95%",
+      "identifyReason": "发现以下可信特征：\n✓ 来源于政府公开文件\n✓ 可在人民网和政府网站查询\n✓ 多家权威媒体同步报道",
+      "result": "信息真实。2025年国家确实将城乡居民基础养老金最低标准提高20元，相关政策文件已由政府公开发布。",
+      "risk": "无明显风险。建议通过官方渠道查看完整政策内容。",
+      "reference": "人民网、国务院网站\nhttps://www.gov.cn/zhuanti/2026nztj/2026qglh/yw/202603/content_7060607.htm"
+    },
+    "scoreRule": null
+  },
+  {
+    "id": 8,
+    "sender": "爸爸",
+    "avatar": "dad",
+    "type": "image",
+    "content": "流感疫苗太凶险，建议家人小孩尽早接种防疫的公众号推文",
+    "truth": true,
+    "image": "data/public/image/events/广东疾控.png",
+    "video": null,
+    "source": null,
+    "responseText": "是真的！",
+    "factCheck": {
+      "credibility": "100%",
+      "identifyReason": "发现以下可信特征：\n✓ 来源于疾控中心\n✓ 内容符合公共卫生建议\n✓ 可向官方渠道查证",
+      "result": "信息真实。流感疫苗是预防流感最有效的措施之一。中国疾控中心长期建议老年人、儿童、慢性病患者等重点人群优先接种流感疫苗。",
+      "risk": "新冠疫苗接种禁忌、重点人群等应咨询医生后接种。",
+      "reference": "广东疾控中心：https://mp.weixin.qq.com/s/LSFHaiJ7bod2hrC92zalxQ?scene=1"
+    },
+    "scoreRule": null
+  },
+  {
+    "id": 9,
+    "sender": "表哥",
+    "avatar": "cousin",
+    "type": "image",
+    "content": "广东冰雹造成车辆巨大毁坏的现场照片",
+    "truth": false,
+    "image": "data/public/image/events/冰雹AI图.png",
+    "video": null,
+    "source": null,
+    "responseText": "这张照片是AI生成的，并非真实灾难现场。",
+    "factCheck": {
+      "credibility": "15%",
+      "identifyReason": "发现以下可疑特征：\n✓ 重大灾害信息但无官方核实\n✓ 车辆未变且强度高度一致\n✓ 图片细节存在明显瑕疵\n✓ 无权威媒体报道",
+      "result": "该图片为AI生成。广东省互联网举报中心核实。",
+      "risk": "可能夸大灾情，引发恐慌。",
+      "reference": "广东省互联网举报中心\nhttps://mp.weixin.qq.com/s/5FdB_jvFmPcmblL5XibBfQ"
+    },
+    "scoreRule": null
+  },
+  {
+    "id": 10,
+    "sender": "爷爷",
+    "avatar": "grandpa",
+    "type": "image",
+    "content": "西藏地震时儿童求救照片",
+    "truth": false,
+    "image": "data/public/image/events/地震儿童.jpg",
+    "video": null,
+    "source": null,
+    "responseText": "这不是灾区真实照片，而是AI创作内容。",
+    "factCheck": {
+      "credibility": "10%",
+      "identifyReason": "发现以下可疑特征：\n✓ 图片中自然灾害场景呈现违和感\n✓ 创作者标注AI生成\n✓ 图片清晰度与来源矛盾\n✓ 无法追溯到原始来源",
+      "result": "图片为AI生成。原作者已公开声明为AI作品。",
+      "risk": "消耗公众同情心，影响灾情传播秩序。",
+      "reference": "央视网\nhttps://weibo.com/3266943013/P8O77FxyU?refer_flag=1001030103_"
+    },
+    "scoreRule": null
+  }
+]
