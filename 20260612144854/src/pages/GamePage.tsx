@@ -29,6 +29,7 @@ function getTimeStr(index: number): string {
 
 const events = eventsData as Event[]
 const ACTIONS_STORAGE_KEY = 'truth_game_actions'
+const CURRENT_INDEX_KEY = 'truth_game_current_index'
 
 /** 从 localStorage 恢复已记录的 actions，保证跨导航累计 */
 function loadActions(): PlayerAction[] {
@@ -40,6 +41,20 @@ function loadActions(): PlayerAction[] {
   }
 }
 
+/** 从 localStorage 恢复当前事件索引，保证返回后不丢失进度 */
+function loadCurrentIndex(): number {
+  try {
+    const raw = localStorage.getItem(CURRENT_INDEX_KEY)
+    if (raw) {
+      const idx = parseInt(raw, 10)
+      return Math.min(Math.max(idx, 0), events.length - 1)
+    }
+    return 0
+  } catch {
+    return 0
+  }
+}
+
 function GamePage() {
   const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()
@@ -48,9 +63,12 @@ function GamePage() {
   const replyEventIdFromUrl = searchParams.get('replyEventId')
 
   const [currentIndex, setCurrentIndex] = useState(() => {
-    if (!replyEventIdFromUrl) return 0
-    const targetIndex = events.findIndex((e) => e.id === Number(replyEventIdFromUrl))
-    return targetIndex >= 0 ? targetIndex : 0
+    if (replyEventIdFromUrl) {
+      const targetIndex = events.findIndex((e) => e.id === Number(replyEventIdFromUrl))
+      return targetIndex >= 0 ? targetIndex : 0
+    }
+    // 没有 URL 参数时，从 localStorage 恢复进度
+    return loadCurrentIndex()
   })
 
   const [phase, setPhase] = useState<'typing' | 'message' | 'reply'>(() => {
@@ -68,6 +86,11 @@ function GamePage() {
       return next
     })
   }, [])
+  // 同步 currentIndex 到 localStorage，保证跨导航恢复
+  useEffect(() => {
+    localStorage.setItem(CURRENT_INDEX_KEY, String(currentIndex))
+  }, [currentIndex])
+
   const [imgError, setImgError] = useState(false)
   const [lightboxSrc, setLightboxSrc] = useState<string | null>(null)
   const [videoModal, setVideoModal] = useState(false)
@@ -259,6 +282,7 @@ function GamePage() {
   const gotoEnding = useCallback(() => {
     cleanReplyParams()
     localStorage.removeItem(ACTIONS_STORAGE_KEY) // 清理存档
+    localStorage.removeItem(CURRENT_INDEX_KEY)
     const percent = calculateScorePercent(actions)
     if (percent <= 60) {
       navigate('/ending', { replace: true })   // 结局1: 群聊沦陷
@@ -346,7 +370,7 @@ function GamePage() {
 
       {/* 聊天头部 */}
       <div className="relative z-10 flex items-center justify-between px-4 py-3">
-        <button onClick={() => { localStorage.removeItem(ACTIONS_STORAGE_KEY); navigate('/') }} className="w-8 h-8 flex items-center justify-center">
+        <button onClick={() => { localStorage.removeItem(ACTIONS_STORAGE_KEY); localStorage.removeItem(CURRENT_INDEX_KEY); navigate('/') }} className="w-8 h-8 flex items-center justify-center">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <path d="M15 18l-6-6 6-6" />
           </svg>

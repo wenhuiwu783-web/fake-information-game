@@ -104,6 +104,7 @@ function HomePage() {
         <button
           onClick={() => {
             localStorage.removeItem('truth_game_actions')
+            localStorage.removeItem('truth_game_current_index')
             navigate('/game')
           }}
           className="w-full max-w-[320px] py-[14px] rounded-[12px] text-white text-[17px] font-medium tracking-wider active:scale-[0.98] transition-transform"
