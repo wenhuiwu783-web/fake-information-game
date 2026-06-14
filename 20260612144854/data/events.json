@@ -4,12 +4,12 @@
     "sender": "爸爸",
     "avatar": "dad",
     "type": "text",
-    "content": "专家提醒，多喝水可以冲刷肝肾毒素，每天必须喝够4L以上水,你们要多喝水啊！",
+    "content": "专家提醒，多喝水可以冲刷肝肾毒素，每天必须喝够4L以上水，你们要多喝水啊！",
     "truth": false,
     "image": null,
     "video": null,
     "source": null,
-    "responseText": "我查了一下，喝太多水反而可能增加肾脏负担，并不是越多越好。",
+    "responseText": "我查了一下，短时间内喝太多的水对身体不好。",
     "factCheck": {
       "credibility": "10%",
       "identifyReason": "发现以下可疑特征：\n✓ 使用\"必须\"\"一定\"等绝对化表述\n✓ 无任何医学机构或专业来源\n✓ 宣称\"排毒\"缺乏科学依据和验证\n✓ 信息来源为个人养生账号",
@@ -172,7 +172,7 @@
     "responseText": "这张照片是AI生成的，并非真实灾难现场。",
     "factCheck": {
       "credibility": "15%",
-      "identifyReason": "发现以下可疑特征：\n✓ 重大灾害信息但无官方核实\n✓ 车辆未变且强度高度一致\n✓ 图片细节存在明显瑕疵\n✓ 无权威媒体报道",
+      "identifyReason": "发现以下可疑特征：\n✓ 重大灾害信息但无官方核实\n✓ 图片细节存在明显瑕疵 车辆车牌错误\n✓ 无权威媒体报道",
       "result": "该图片为AI生成。广东省互联网举报中心核实。",
       "risk": "可能夸大灾情，引发恐慌。",
       "reference": "广东省互联网举报中心\nhttps://mp.weixin.qq.com/s/5FdB_jvFmPcmblL5XibBfQ"
@@ -186,13 +186,13 @@
     "type": "image",
     "content": "西藏地震时儿童求救照片",
     "truth": false,
-    "image": "/image/events/地震儿童.jpg",
+    "image": "/image/events/AI child.png",
     "video": null,
     "source": null,
     "responseText": "这不是灾区真实照片，而是AI创作内容。",
     "factCheck": {
       "credibility": "10%",
-      "identifyReason": "发现以下可疑特征：\n✓ 图片中自然灾害场景呈现违和感\n✓ 创作者标注AI生成\n✓ 图片清晰度与来源矛盾\n✓ 无法追溯到原始来源",
+      "identifyReason": "发现以下可疑特征：\n✓ 图片中自然灾害场景呈现违和感\n✓ 图片不合常理 小孩手指有6根\n✓ 无法追溯到原始来源",
       "result": "图片为AI生成。原作者已公开声明为AI作品。",
       "risk": "消耗公众同情心，影响灾情传播秩序。",
       "reference": "央视网\nhttps://weibo.com/3266943013/P8O77FxyU?refer_flag=1001030103_"
