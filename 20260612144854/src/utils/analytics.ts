@@ -3,9 +3,6 @@
  * 所有数据存储在 localStorage，key: truth_game_analytics
  */
 import type {
-  Session,
-  EventLog,
-  InteractionLog,
   AnalyticsData,
   Judgment,
   ModalAction,
