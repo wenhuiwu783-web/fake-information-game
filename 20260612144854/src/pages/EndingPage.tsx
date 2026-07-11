@@ -1,7 +1,23 @@
 import { useNavigate } from 'react-router-dom'
+import { useState, useEffect, useCallback } from 'react'
+import { exportData, hasData } from '../utils/analytics'
 
 function EndingPage() {
   const navigate = useNavigate()
+  const [exportClickCount, setExportClickCount] = useState(0)
+
+  // 隐藏导出：点击5次底部指示条后触发
+  const handleExportClick = useCallback(() => {
+    if (!hasData()) return
+    const newCount = exportClickCount + 1
+    setExportClickCount(newCount)
+    if (newCount >= 5) {
+      exportData()
+      setExportClickCount(0)
+    }
+    // 3秒后重置计数
+    setTimeout(() => setExportClickCount(0), 3000)
+  }, [exportClickCount])
 
   return (
     <div className="relative flex flex-col h-full overflow-hidden animate-fade-in-page" style={{ backgroundColor: '#0a0a0a' }}>
@@ -196,8 +212,17 @@ function EndingPage() {
       </div>
 
       {/* 底部指示 */}
-      <div className="relative z-10 flex justify-center pb-6 pt-2">
+      <div className="relative z-10 flex justify-center pb-6 pt-2 gap-2 items-center">
         <div className="w-10 h-1 rounded-full" style={{ backgroundColor: '#30363d' }} />
+        {/* 隐藏导出触发区：点击5次底部指示条后导出 */}
+        <span
+          className="text-[8px] cursor-pointer select-none"
+          style={{ color: 'rgba(48, 54, 61, 0.3)' }}
+          onClick={handleExportClick}
+          title="点击5次导出数据"
+        >
+          ·
+        </span>
       </div>
     </div>
   )

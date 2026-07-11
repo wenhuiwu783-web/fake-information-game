@@ -69,7 +69,7 @@ export function getSessionId(): string {
 }
 
 /** 结束会话，记录结局和得分 */
-export function endSession(ending: EndingType, finalScore: number, finalPercent: number): void {
+export async function endSession(ending: EndingType, finalScore: number, finalPercent: number): Promise<void> {
   const data = loadData()
   if (!data) return
   data.session.endTime = now()
@@ -78,8 +78,8 @@ export function endSession(ending: EndingType, finalScore: number, finalPercent:
   data.session.finalPercent = finalPercent
   saveData(data)
   
-  // 提交数据到服务器
-  submitToServer(data)
+  // 等待数据提交完成后再跳转
+  await submitToServer(data)
 }
 
 // ============ Event 操作 ============

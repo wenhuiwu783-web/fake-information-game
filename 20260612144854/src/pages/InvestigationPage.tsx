@@ -1,5 +1,7 @@
 import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useEffect } from 'react'
 import eventsData from '../../data/events.json'
+import { logInvestigateEnter, logInvestigateExit, logInteraction } from '../utils/analytics'
 
 type Event = (typeof eventsData)[number]
 const events = eventsData as Event[]
@@ -11,6 +13,14 @@ function InvestigationPage() {
   const judgment = (searchParams.get('judgment') || 'doubt') as 'trust' | 'unsure' | 'doubt'
 
   const event = events.find((e) => e.id === eventId)
+
+  // 记录进入/离开调查页
+  useEffect(() => {
+    logInvestigateEnter(eventId)
+    return () => {
+      logInvestigateExit(eventId)
+    }
+  }, [eventId])
 
   if (!event) {
     return (
@@ -222,7 +232,10 @@ function InvestigationPage() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[#58a6ff] bg-[#58a6ff]/10 hover:bg-[#58a6ff]/20 transition-colors text-[12px] font-medium mb-0.5"
-                    onClick={(e) => e.stopPropagation()}
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      logInteraction('source_click', eventId, part)
+                    }}
                   >
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />

@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import { initSession, clearData } from '../utils/analytics'
 
 function HomePage() {
   const navigate = useNavigate()
@@ -103,6 +104,8 @@ function HomePage() {
         {/* 进入群聊按钮 */}
         <button
           onClick={() => {
+            clearData() // 清除上一局埋点数据
+            initSession() // 初始化新会话
             localStorage.removeItem('truth_game_actions')
             localStorage.removeItem('truth_game_current_index')
             navigate('/game')

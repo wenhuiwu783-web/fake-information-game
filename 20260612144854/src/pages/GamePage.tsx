@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback, useLayoutEffect } from 'react
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import eventsData from '../../data/events.json'
 import { calculateTotalScore, calculateScorePercent, type PlayerAction, type Judgment } from '../utils/score'
+import { logMessageShown, logJudgment, logModalOpen, logModalAction, logResponded, logInteraction, endSession, logEventScore } from '../utils/analytics'
 
 type Event = typeof eventsData[number]
 
@@ -97,6 +98,7 @@ function GamePage() {
   const [showModal, setShowModal] = useState(false)
   const [pendingJudgment, setPendingJudgment] = useState<'unsure' | 'doubt' | null>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
+  const messageShownTimeRef = useRef<number>(0) // 记录消息显示时间，用于计算决策时间
 
   // 标记是否为"从调查页返回"模式（初始化时判断）
   const isFromInvestigation = !!replyEventIdFromUrl
@@ -115,6 +117,9 @@ function GamePage() {
     const replyEventId = Number(replyEventIdFromUrl)
     const truth = searchParams.get('truth') === 'true'
     const judgment = (searchParams.get('judgment') || 'doubt') as Judgment
+
+    // 记录回应
+    logResponded(replyEventId)
 
     // 创建 action（从 localStorage 恢复已有 actions，确保跨导航累计）
     saveActions((prev) => {
@@ -164,6 +169,10 @@ function GamePage() {
     setImgError(false)
     const timer = setTimeout(() => {
       setPhase('message')
+      // 记录消息显示时间和埋点
+      const shownTime = Date.now()
+      messageShownTimeRef.current = shownTime
+      logMessageShown(currentEvent.id, currentEvent.truth, currentEvent.type)
     }, 1000)
     return () => clearTimeout(timer)
   }, [currentIndex, searchParams])
@@ -218,25 +227,35 @@ function GamePage() {
 
   const handleJudgment = useCallback(
     (judgment: 'trust' | 'unsure' | 'doubt') => {
+      // 记录判断和决策时间
+      const decisionTimeMs = Date.now() - messageShownTimeRef.current
+      logJudgment(currentEvent.id, judgment, decisionTimeMs)
+
       if (judgment === 'trust') {
         gotoInvestigation(judgment)
       } else {
         setPendingJudgment(judgment)
         setShowModal(true)
+        logModalOpen(currentEvent.id)
       }
     },
-    [gotoInvestigation]
+    [currentEvent.id, gotoInvestigation]
   )
 
   const handleModalAction = useCallback(
     (action: 'investigate' | 'respond') => {
       if (!pendingJudgment) return
+
+      // 记录弹窗操作
+      logModalAction(currentEvent.id, action)
+
       if (action === 'investigate') {
         setShowModal(false)
         gotoInvestigation(pendingJudgment)
       } else {
         // 回应：记录行为（未调查），显示回应内容，等待用户点击"下一条"
         setShowModal(false)
+        logResponded(currentEvent.id)
         saveActions((prev) => {
           const exists = prev.find((a) => a.eventId === currentEvent.id)
           if (exists) {
@@ -279,18 +298,34 @@ function GamePage() {
   }, [searchParams, setSearchParams])
 
   // 直接跳转到结局（在点击"查看结局"按钮时调用）
-  const gotoEnding = useCallback(() => {
+  const gotoEnding = useCallback(async () => {
     cleanReplyParams()
-    localStorage.removeItem(ACTIONS_STORAGE_KEY) // 清理存档
-    localStorage.removeItem(CURRENT_INDEX_KEY)
+
+    // 记录所有事件得分
+    logEventScore(actions)
+
+    // 记录结局
+    const totalScore = calculateTotalScore(actions)
     const percent = calculateScorePercent(actions)
+    let ending: '沦陷' | '清醒' | '真相'
+    let endingRoute: string
     if (percent <= 60) {
-      navigate('/ending', { replace: true })   // 结局1: 群聊沦陷
+      ending = '沦陷'
+      endingRoute = '/ending'
     } else if (percent <= 89) {
-      navigate('/ending-clear', { replace: true })  // 结局2: 独自清醒
+      ending = '清醒'
+      endingRoute = '/ending-clear'
     } else {
-      navigate('/ending-truth', { replace: true })  // 结局3: 真相守护者
+      ending = '真相'
+      endingRoute = '/ending-truth'
     }
+    // 等待数据提交完成后再清理存档和跳转
+    await endSession(ending, totalScore, percent)
+
+    // 清理存档并跳转
+    localStorage.removeItem(ACTIONS_STORAGE_KEY)
+    localStorage.removeItem(CURRENT_INDEX_KEY)
+    navigate(endingRoute, { replace: true })
   }, [actions, navigate, cleanReplyParams])
 
   // 进入下一个事件
@@ -465,7 +500,10 @@ function GamePage() {
                     {currentEvent.image && !imgError ? (
                       <div
                         className="cursor-pointer group relative"
-                        onClick={() => setLightboxSrc(currentEvent.image!)}
+                        onClick={() => {
+                          logInteraction('image_zoom', currentEvent.id, currentEvent.image!)
+                          setLightboxSrc(currentEvent.image!)
+                        }}
                       >
                         <img
                           src={currentEvent.image}
@@ -497,7 +535,10 @@ function GamePage() {
                 {/* 视频类型 */}
                 {currentEvent.type === 'video' && (
                   <div className="rounded-2xl rounded-tl-sm overflow-hidden cursor-pointer" style={{ backgroundColor: '#21262d', maxWidth: 240 }}
-                    onClick={() => setVideoModal(true)}>
+                    onClick={() => {
+                      logInteraction('video_play', currentEvent.id)
+                      setVideoModal(true)
+                    }}>
                     <div className="w-[200px] h-[140px] flex flex-col items-center justify-center gap-2 relative group" style={{ backgroundColor: '#1a1f29' }}>
                       {/* 封面图（如果有） */}
                       {currentEvent.image && !imgError ? (
