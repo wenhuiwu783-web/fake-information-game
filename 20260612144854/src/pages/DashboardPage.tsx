@@ -353,7 +353,7 @@ function DashboardPage() {
                       backgroundColor: s.ending === 'v' || s.ending === '沦陷' ? '#ff475720' : s.ending === '-9' || s.ending === '清醒' ? '#2ed57320' : '#ffa50220',
                       color: s.ending === 'v' || s.ending === '沦陷' ? '#ff4757' : s.ending === '-9' || s.ending === '清醒' ? '#2ed573' : '#ffa502',
                     }}>
-                      {ENDING_LABELS[s.ending] || s.ending || '?'}
+                      {ENDING_LABELS[s.ending ?? ''] || s.ending || '?'}
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
