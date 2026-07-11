@@ -82,7 +82,8 @@ function DashboardPage() {
   // 结局分布
   const endingDist = Object.entries(
     sessions.reduce<Record<string, number>>((acc, s) => {
-      const label = ENDING_LABELS[s.ending] || s.ending || '未知'
+      const key = s.ending ?? ''
+      const label = ENDING_LABELS[key] ?? s.ending ?? '未知'
       acc[label] = (acc[label] || 0) + 1
       return acc
     }, {})
@@ -275,7 +276,7 @@ function DashboardPage() {
                 <YAxis type="category" dataKey="name" tick={{ fill: '#aaa', fontSize: 10 }} width={60} />
                 <ReTooltip
                   contentStyle={{ backgroundColor: '#1a1a30', border: '1px solid #2a2a4a', borderRadius: 8, color: '#fff' }}
-                  formatter={(value: number) => [`${value}%`, '正确率']}
+                  formatter={((value: number | string) => [`${value}%`, '正确率']) as any}
                 />
                 <Bar dataKey="rate" radius={[0, 4, 4, 0]}>
                   {accuracyData.map((_, i) => (
