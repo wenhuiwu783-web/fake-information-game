@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useCallback } from 'react'
 import { exportData, hasData } from '../utils/analytics'
 
 function EndingPage() {
