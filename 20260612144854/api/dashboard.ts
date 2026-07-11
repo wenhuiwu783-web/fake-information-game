@@ -25,7 +25,13 @@ export default async function handler(_req: VercelRequest, res: VercelResponse) 
     const data = await response.json()
 
     // 解析 Redis 返回的字符串数组为 JSON 对象
-    const sessions = data.result.map((item: string) => JSON.parse(item))
+    const sessions = data.result
+      .map((item: any) => {
+        // 兼容 Redis 多层嵌套结构 [["..."], ...]
+        const raw = Array.isArray(item) ? item[0] : item
+        return typeof raw === 'string' ? JSON.parse(raw) : raw
+      })
+      .filter((s: any) => s != null && s.sessionId !== 'manual-test')
 
     // 按提交时间倒序排列
     sessions.sort((a: any, b: any) =>
