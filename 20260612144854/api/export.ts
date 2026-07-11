@@ -2,7 +2,7 @@ import type { VercelRequest, VercelResponse } from '@vercel/node'
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // 简单身份验证 - 可以添加更复杂的验证
-  const authToken = req.headers.authorization?.replace('Bearer ', '')
+  const authToken = req.headers.authorization?.replace('Bearer ', '') || (req.query.token as string)
   const validToken = process.env.EXPORT_TOKEN || 'default-secret-token'
   
   if (authToken !== validToken) {
