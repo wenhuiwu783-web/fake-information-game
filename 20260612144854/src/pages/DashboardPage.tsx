@@ -124,7 +124,7 @@ function DashboardPage() {
   const judgmentDist = allEvents
     .filter((e) => e.judgment)
     .reduce<Record<string, number>>((acc, e) => {
-      const j = e.judgment === 'trust' ? '相信' : e.judgment === 'unsure' ? '不确定' : e.judgment === 'doubt' ? '怀疑' : e.judgment
+      const j: string = e.judgment === 'trust' ? '相信' : e.judgment === 'unsure' ? '不确定' : e.judgment === 'doubt' ? '怀疑' : (e.judgment || '未知')
       acc[j] = (acc[j] || 0) + 1
       return acc
     }, {})
