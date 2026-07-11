@@ -101,9 +101,13 @@ function DashboardPage() {
     .sort(([a], [b]) => a.localeCompare(b))
     .map(([date, count]) => ({ date: date.slice(5), count }))
 
-  // 事件正确率
-  const allEvents = sessions.flatMap((s) => s.events)
+  // 事件正确率 — 容错处理：events 可能为 undefined
+  const allEvents = sessions
+    .filter((s): s is ExportSession & { events: ExportEvent[] } => Array.isArray(s.events))
+    .flatMap((s) => s.events)
+    .filter((e): e is ExportEvent => e != null && typeof e === 'object')
   const eventAccuracy = allEvents.reduce<Record<string, { correct: number; total: number }>>((acc, e) => {
+    if (e.eventId == null) return acc
     const key = `事件 #${e.eventId}`
     if (!acc[key]) acc[key] = { correct: 0, total: 0 }
     acc[key].total++
@@ -122,7 +126,7 @@ function DashboardPage() {
 
   // 判断分布
   const judgmentDist = allEvents
-    .filter((e) => e.judgment)
+    .filter((e): e is ExportEvent => e != null && !!e.judgment)
     .reduce<Record<string, number>>((acc, e) => {
       const j: string = e.judgment === 'trust' ? '相信' : e.judgment === 'unsure' ? '不确定' : e.judgment === 'doubt' ? '怀疑' : (e.judgment || '未知')
       acc[j] = (acc[j] || 0) + 1
@@ -143,19 +147,19 @@ function DashboardPage() {
     .map(([name, value]) => ({ name, value }))
 
   // 唯一 IP 数
-  const uniqueIPs = new Set(sessions.map((s) => s.ip)).size
+  const uniqueIPs = new Set(sessions.filter((s) => s != null).map((s) => s.ip)).size
 
   // 平均决策时间
   const decisionTimes = allEvents
-    .filter((e) => e.decisionTimeMs != null && e.decisionTimeMs > 0)
-    .map((e) => e.decisionTimeMs!)
+    .filter((e): e is ExportEvent & { decisionTimeMs: number } => e != null && e.decisionTimeMs != null && e.decisionTimeMs > 0)
+    .map((e) => e.decisionTimeMs)
   const avgDecisionTime =
     decisionTimes.length > 0
       ? Math.round(decisionTimes.reduce((a, b) => a + b, 0) / decisionTimes.length)
       : 0
 
   // 求证使用率
-  const investigatedCount = allEvents.filter((e) => e.investigated).length
+  const investigatedCount = allEvents.filter((e) => e != null && e.investigated).length
 
   if (loading) {
     return (
