@@ -5,6 +5,7 @@ import InvestigationPage from './pages/InvestigationPage'
 import EndingPage from './pages/EndingPage'
 import EndingClearPage from './pages/EndingClearPage'
 import EndingTruthPage from './pages/EndingTruthPage'
+import DashboardPage from './pages/DashboardPage'
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/ending" element={<EndingPage />} />
           <Route path="/ending-clear" element={<EndingClearPage />} />
           <Route path="/ending-truth" element={<EndingTruthPage />} />
+          <Route path="/dashboard" element={<DashboardPage />} />
         </Routes>
       </div>
     </BrowserRouter>

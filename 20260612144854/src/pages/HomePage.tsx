@@ -1,8 +1,33 @@
+import { useState, useRef, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { initSession, clearData } from '../utils/analytics'
 
 function HomePage() {
   const navigate = useNavigate()
+  const tapCountRef = useRef(0)
+  const tapTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const [showEasterEgg, setShowEasterEgg] = useState(false)
+
+  const handleVersionTap = useCallback(() => {
+    tapCountRef.current += 1
+    if (tapCountRef.current >= 7) {
+      // 连点 7 次达成，跳转到 Dashboard
+      tapCountRef.current = 0
+      if (tapTimerRef.current) clearTimeout(tapTimerRef.current)
+      navigate('/dashboard')
+      return
+    }
+    // 3 秒内未连点完成则重置
+    if (tapTimerRef.current) clearTimeout(tapTimerRef.current)
+    tapTimerRef.current = setTimeout(() => {
+      tapCountRef.current = 0
+      setShowEasterEgg(false)
+    }, 3000)
+    // 倒计时提示（中间几次显示）
+    if (tapCountRef.current >= 3 && tapCountRef.current < 7) {
+      setShowEasterEgg(true)
+    }
+  }, [navigate])
 
   return (
     <div className="relative flex flex-col h-full overflow-hidden animate-fade-in-page" style={{ backgroundColor: '#1a1a1a' }}>
@@ -120,6 +145,22 @@ function HomePage() {
         <p className="text-[#666666] text-[12px] mt-5 tracking-[0.15em]">
           真相，需要你来守护
         </p>
+
+        {/* 隐藏入口：连点 7 次版本号进入 Dashboard */}
+        <div className="relative mt-6">
+          <button
+            onClick={handleVersionTap}
+            className="text-[10px] tracking-wider transition-colors cursor-default select-none"
+            style={{ color: showEasterEgg ? '#2ed573' : 'transparent' }}
+          >
+            {showEasterEgg ? `🔍 ${7 - tapCountRef.current}` : 'v1.0.0'}
+          </button>
+          {showEasterEgg && (
+            <div className="absolute left-1/2 -translate-x-1/2 -top-4 text-[10px] text-[#2ed573] whitespace-nowrap animate-pulse">
+              再点 {7 - tapCountRef.current} 次进入后台
+            </div>
+          )}
+        </div>
       </div>
 
       {/* 底部进度指示 */}
